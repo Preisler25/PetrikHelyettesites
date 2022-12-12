@@ -21,7 +21,7 @@
         $host = "localhost";
         $username = "root";
         $pass = "";
-        $db = "helyettesites";
+        $db = "maindb";
         $conn = mysqli_connect($host, $username, $pass, $db);
         echo mysqli_error($conn);
     ?>
@@ -31,12 +31,6 @@
         <img src="icon.png" onclick="mainpage()">
         <!--<div class="search">
             <input type="search" class="searchTerm" placeholder="Osztály">
-                Magas hegyek mögött
-                hol a tenger hupikék
-                ott laknak ők a törpikék
-                Hatalmas fák között
-                gombaházakban lakunk
-           
         </div> -->
    </header>
     <?php  
@@ -52,7 +46,6 @@
         $weekday[6]="Szombat";
     ?>
     <div class="content">
-    <!--Touch some grass, kid. -A.M.-->
     <!-- Mai nap -->
     <?php 
       echo '<div class="datum ma">'. $today."-".$weekday[date('w')].'</div>';'</div>';
@@ -117,7 +110,6 @@
       }
     ?>
     <!-- Holnapi nap -->
-    <!--"izé igazából én egy back-end develooper vagyok"-B.M. -->
     <div class="holnap">
     <?php 
       if(date('w')+1>6){
@@ -157,7 +149,6 @@
     ?>
     </div>
 </div>
-<!--NA mit keresel te itt! figyelj inkább az órádra vagy csináld meg a Matek házid :D tudom hogy Lovasnál 1-es leszel (P.A.)-->
-<!--<footer><div class="copy">Auer Máté - Blága Máté - Gyenes Bálint - Preisler András &copy; 2022</div></footer>-->
+<!--Auer Máté - Blága Máté - Gyenes Bálint - Preisler András ©️ 2022-->
 </body>
 </html>
