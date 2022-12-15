@@ -363,8 +363,9 @@
     <div class="accountreg">
         <?php
             if(isset($_POST['btn_accreg'])){
-                $pw = crypt(CRYPT_BLOWFISH,$_POST['passw']);
-                $sqlregcommand = "INSERT INTO `login`(`uname`, `passw`) VALUES ('".$_POST['uname']."','".$pw."')";
+                $pw = crypt($_POST['passw'],'$6$rounds=5000$MaCiLaci$');
+                $pwfulllist = explode("$",$pw);
+                $sqlregcommand = "INSERT INTO `login`(`uname`, `passw`) VALUES ('".$_POST['uname']."','".end($pwfulllist)."')";
                 if(mysqli_query($maindb,$sqlregcommand)){
                 }
             }
