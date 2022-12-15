@@ -11,9 +11,10 @@
     include 'maindbcfg.php';
     if(isset($_POST['btn_login'])){
         $uname = $_POST['username'];
-        $password = crypt(CRYPT_BLOWFISH,$_POST['password']);
+        $password = crypt($_POST['password'],'$6$rounds=5000$MaCiLaci$');
+        $pwfulllist = explode("$",$password);
         if ($uname != "" && $password != ""){
-            $sql_query = "select count(*) as cntUser from login where uname='".$uname."' and passw='".$password."'";
+            $sql_query = "select count(*) as cntUser from login where uname='".$uname."' and passw='".end($pwfulllist)."'";
             $result = mysqli_query($maindb,$sql_query);
             $row = mysqli_fetch_array($result);
             $count = $row['cntUser'];
