@@ -68,7 +68,7 @@ CREATE TABLE `login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `login` (`uname`, `passw`, `id`) VALUES
-('admin', 'adamXYRwix/Mk', 1);
+('admin', 'VooLWUNTI54d2iSCtJBieKXT7ItNULUFvi4p.4r8qsw1njo5gRc1TKPS4nEqPW7jLaYv757wZF1SRlIIqi.QQ.', 1);
 
 CREATE TABLE `tanarok` (
   `tanar` varchar(50) NOT NULL
