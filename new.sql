@@ -1,0 +1,1 @@
+ALTER TABLE days MODIFY class varchar(150)

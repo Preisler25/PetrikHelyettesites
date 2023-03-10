@@ -21,12 +21,12 @@
         $host = "localhost";
         $username = "root";
         $pass = "";
-        $db = "maindb";
+        $db = "helyettesites";
         $conn = mysqli_connect($host, $username, $pass, $db);
         echo mysqli_error($conn);
     ?>
 </head>
-<body>
+<body>    
     <header>
         <img src="icon.png" onclick="mainpage()">
         <!--<div class="search">
@@ -47,106 +47,84 @@
     ?>
     <div class="content">
     <!-- Mai nap -->
-    <?php 
-      echo '<div class="datum ma">'. $today."-".$weekday[date('w')].'</div>';'</div>';
-      $sqlrequesttoday = "SELECT * FROM `days` WHERE day = '". $today. "' AND tipus ='tanar' ORDER BY tname, ora ASC; ";
-      $sqlrequestteremtoday = "SELECT * FROM`days` WHERE day = '". $today. "' AND tipus ='terem' ORDER BY tname, ora ASC; ";
-      $sqlalertrequest = "SELECT * FROM`days` WHERE  day = '". $today. "' AND tipus ='alert'";
-      $restoday = mysqli_query($conn,$sqlrequesttoday);
-      $resteremtoday = mysqli_query($conn,$sqlrequestteremtoday);
-      $resalerttorday = mysqli_query($conn,$sqlalertrequest);
-      echo mysqli_error($conn);
-      $todayteachers=array();
-      if($resalerttorday){
-          while($row = $resalerttorday -> fetch_assoc()){
-                echo '<div class="hianyzas">';
-                echo '<div class="tanarcim">';
-                echo $row['alert'];
-                echo '</div>';
-                echo '</div>';
+    <!--Test-->
+    <?php
+
+    $td = date("Y.m");
+    // for Loop to display numbers
+    for( $num = 0; $num < 7; $num += 1) {
+        $tdday = date('d')+$num;
+        $checkDay = $td.".".$tdday;
+        $dateW = date('w')+$num;
+        if ($dateW > 6) {
+            $dateW = $dateW-7;
+        }
+        $presqlselect = "SELECT * FROM `days` WHERE day = '". $checkDay. "' ORDER BY tname, ora ASC; ";
+        $res = mysqli_query($conn,$presqlselect);
+        if(mysqli_num_rows($res)>0){
+            echo '<div class="datum ma">'. $checkDay." - ".$weekday[$dateW].'</div>';'</div>';
+            $sqlrequesttoday = "SELECT * FROM `days` WHERE day = '". $checkDay. "' AND tipus ='tanar' ORDER BY tname, ora ASC; ";
+            $sqlrequestteremtoday = "SELECT * FROM`days` WHERE day = '". $checkDay. "' AND tipus ='terem' ORDER BY tname, ora ASC; ";
+            $sqlalertrequest = "SELECT * FROM`days` WHERE  day = '". $checkDay. "' AND tipus ='alert'";
+            $restoday = mysqli_query($conn,$sqlrequesttoday);
+            $resteremtoday = mysqli_query($conn,$sqlrequestteremtoday);
+            $resalerttorday = mysqli_query($conn,$sqlalertrequest);
+            echo mysqli_error($conn);
+            $todayteachers=array();
+            if($resalerttorday){
+                while($row = $resalerttorday -> fetch_assoc()){
+                    echo '<div class="hianyzas">';
+                    echo '<div class="tanarcim">';
+                    echo $row['alert'];
+                    echo '</div>';
+                    echo '</div>';
+                }
             }
-        }
-      if($restoday){
-        while($row = $restoday -> fetch_assoc()){
-            if(end($todayteachers) != $row['tname'] && count($todayteachers) >= 1){
-                echo '</div>';
+            if($restoday){
+                while($row = $restoday -> fetch_assoc()){
+                    if(end($todayteachers) != $row['tname'] && count($todayteachers) >= 1){
+                        echo '</div>';
+                    }
+                    if(in_array($row['tname'],$todayteachers)){
+                    }else{
+                        echo '<div class="hianyzas">';
+                        echo '<div class="tanarcim">'.$row['tname'].'</div>';
+                        array_push($todayteachers,$row['tname']);
+                    }
+                    echo '<div class="data">';
+                    echo '<div class="ora subdata">'.$row['ora'].'</div>';
+                    echo '<div class="helytan subdata">'.$row['helytan'];
+                    if($row['ovh'] == "1"){
+                        echo'ÖVH'.'</div>';
+                    }else{
+                        echo '</div>';
+                    }
+                    echo '<div class="terem subdata">'.$row['terem'].'</div>';
+                    echo '<div class="osztaly subdata">'. $row['class'].'</div>';
+                    echo '</div>';
+                }
+                if(!empty($todayteachers)){
+                    echo '</div>';
+                }
+                if (mysqli_num_rows($resteremtoday) > 0) {
+                    echo '<div class="teremcserekcim">Teremcserék</div>';
+                }
+                if($resteremtoday){
+                    while($row = $resteremtoday -> fetch_assoc()){
+                    echo '<div class="hianyzas">';
+                    echo '<div class="data">';
+                    echo '<div class="subdata">'.$row['tname'].'</div>';
+                    echo '<div class="subdata">'.$row['terem'].'</div>';
+                    echo '<div class="subdata">'.$row['ora'].'</div>';
+                    echo '<div class="subdata">'.$row['class'].'</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    }
+                }
             }
-            if(in_array($row['tname'],$todayteachers)){
-            }else{
-                echo '<div class="hianyzas">';
-                echo '<div class="tanarcim">'.$row['tname'].'</div>';
-                array_push($todayteachers,$row['tname']);
-            }
-            echo '<div class="data">';
-            echo '<div class="ora subdata">'.$row['ora'].'</div>';
-            echo '<div class="helytan subdata">'.$row['helytan'];
-            if($row['ovh'] == "1"){
-                echo'ÖVH'.'</div>';
-            }else{
-                echo '</div>';
-            }
-            echo '<div class="terem subdata">'.$row['terem'].'</div>';
-            echo '<div class="osztaly subdata">'. $row['class'].'</div>';
-            echo '</div>';
-        }
-        if(!empty($todayteachers)){
-            echo '</div>';
-        }
-        if (mysqli_num_rows($resteremtoday) > 0) {
-            echo '<div class="teremcserekcim">Teremcserék</div>';
-        }
-        if($resteremtoday){
-            while($row = $resteremtoday -> fetch_assoc()){
-              echo '<div class="hianyzas">';
-              echo '<div class="data">';
-              echo '<div class="subdata">'.$row['tname'].'</div>';
-              echo '<div class="subdata">'.$row['terem'].'</div>';
-              echo '<div class="subdata">'.$row['ora'].'</div>';
-              echo '<div class="subdata">'.$row['class'].'</div>';
-              echo '</div>';
-              echo '</div>';
-            }
-        }
-      }
-    ?>
-    <!-- Holnapi nap -->
-    <div class="holnap">
-    <?php 
-      if(date('w')+1>6){
-        echo '<div class="datum holnap">'. $tomorrow."-".$weekday[0].'</div>';
-      }else{
-      echo '<div class="datum holnap">'. $tomorrow."-".$weekday[date('w')+1].'</div>';}
-      $sqlrequesttomorrow  = "SELECT * FROM`days` WHERE day ='". $tomorrow. "' AND tipus='tanar' ORDER BY tname, ora ASC; ";
-      $restomorrow = mysqli_query($conn, $sqlrequesttomorrow);
-      $tomorrowteachers = array();
-      if($restomorrow){
-      while($row = $restomorrow -> fetch_assoc()){
-        if(end($tomorrowteachers) != $row['tname'] && count($tomorrowteachers) >= 1){
-            echo '</div>';
-        }
-        if(in_array($row['tname'],$tomorrowteachers)){
-        }else{
-            echo '<div class="hianyzas">';
-            echo '<div class="tanarcim">'.$row['tname'].'</div>';
-            array_push($tomorrowteachers,$row['tname']);
-        }
-        echo '<div class="data">';
-        echo '<div class="ora subdata">'.$row['ora'].'</div>';
-        echo '<div class="helytan subdata">'.$row['helytan'];
-        if($row['ovh'] == "1"){
-            echo'ÖVH'.'</div>';
-        }else{
-            echo '</div>';
-        }
-        echo '<div class="terem subdata">'.$row['terem'].'</div>';
-        echo '<div class="osztaly subdata">'. $row['class'].'</div>';
-        echo '</div>';
-      }
-        if(!empty($tomorrowteachers)){
-            echo '</div>';
-        }
-      }
-    ?>
+        }    
+    }
+?>
     </div>
 </div>
 <!--Auer Máté - Blága Máté - Gyenes Bálint - Preisler András ©️ 2022-->

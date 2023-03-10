@@ -7,7 +7,7 @@ $db = "helyettesites";
 $maindb = mysqli_connect($host, $username, $pass, $db);
 if(!$maindb)
 {
-    echo 'could not connect'.mysqli_error();
+    echo 'Couldnt connect';
 }
 $today = date("Y.m.d");
 if (isset($_GET['status'])){

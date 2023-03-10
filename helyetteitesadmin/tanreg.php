@@ -5,13 +5,15 @@ $tname = $_POST['tname'];
 $helytan = $_POST['helytan'];
 $terem = $_POST['terem'];
 $counter = 0;
-$class = $_POST['class'];
 $lessonsList = array();
 $special = $_SESSION['special'];
 for($i = 1; $i <= 16; $i++){
     if(isset($_POST[$i."helyettesites"])){
         array_push($lessonsList, $i);
     }
+}
+if ($_POST['csoport']){
+    $class = $_POST['class']."  ".$_POST['csoport'];
 }
 
 if($_POST['napok'] != ""){
@@ -66,7 +68,7 @@ if($_POST['napok'] != ""){
         }
     }
 }else{
-    header('location:home.php?open=Helyettesítés&error=EmptyDate');
+     header('location:home.php?open=Helyettesítés&error=EmptyDate');
 }
 if($counter == count($lessonsList)){
     header('location:home.php?open=Helyettesítés');

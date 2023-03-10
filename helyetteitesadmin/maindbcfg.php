@@ -7,6 +7,6 @@ $db = "helyettesites";
 $maindb = mysqli_connect($host, $username, $pass, $db);
 if(!$maindb)
 {
-    echo 'could not connect'.mysqli_error();
+    echo 'could not connect';
 }
 session_start();

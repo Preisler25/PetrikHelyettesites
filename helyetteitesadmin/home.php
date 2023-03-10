@@ -89,6 +89,7 @@
         <input type="submit" name="open" value="Helyettesítés" class="menubutton" id="btn_helyettesites">
         <input type="submit" name="open" value="Teremcsere" class="menubutton" id="btn_teremcsere">
         <input type="submit" name="open" value="Hír" class="menubutton" id="btn_news">
+        <input type="submit" name="open" value="Hét" class="menubutton" id="btn_het">
         <input type="submit" name="open" value="Törlés" class="menubutton" id="btn_delete">
         <input type="submit" name="open" value="Fiókkészítés" class="menubutton" id="btn_accreg">
         <input type="submit" name="open" value="Tv hír regisztálás" class="menubutton" id="btn_tv">
@@ -133,6 +134,7 @@
                     };
                 ?>
             </select>
+            <input type="text" name="csoport" id="csoport" placeholder="Csoport">
             <div class="tulajdonsagok">
                 <?php 
                 if(isset($_GET['s'])){
