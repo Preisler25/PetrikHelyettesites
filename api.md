@@ -1,4 +1,4 @@
-# Project Hive Api 
+# Petrik Helyettesites API
 
 ## Querry Parameters:
 
