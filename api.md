@@ -8,6 +8,7 @@
     napihely
     teremhely
     napihir
+    
 ``ora``:
     "x.óra"
 
